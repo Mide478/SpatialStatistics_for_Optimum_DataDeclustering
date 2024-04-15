@@ -1,0 +1,87 @@
+---
+title: "Cell size determination as an input in cell-based declustering using standardized Ripley's K function"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Install and load required packages for this step of the workflow
+
+```{r}
+library(spatstat)
+library(jsonlite)
+library(rjson)
+library(reticulate)
+library(sp)
+library(maptools)
+library(rgeos)
+library(KneeArrower)
+```
+
+#Set the working directory
+
+```{r}
+ setwd("~/Documents/UT/Research/PyCharm/SSADC/Warm Up To be Transferred/Current Scripts/SSADC Example Case")
+```
+
+#Load the datafile using the X, Y, and porosity dataframe exported to JSON from the Jupyter notebook for all realizations
+
+```{r}
+data <- fromJSON(file="XYcoords.json")
+```
+
+
+#Run the standardized ripley's K using 1000 simulations at a confidence interval of 95% and estimate the maximum curvature of the departure from complete stationary random (CSR) as the cell size input for declustering
+
+```{r}
+
+cellsize <- {}
+opt_curv <-  {}
+
+
+for(i in (1:1)){      # 1:max nos of realizations made i.e. the dataset
+  x<-data[2*i-1]
+  y<-data[2*i]
+  
+  x_min <- sapply(x, min)
+  y_min <- sapply(y, min)
+  x_max <- sapply(x, max)
+  y_max <- sapply(y, max)
+  
+  biased <- ppp(as.numeric(unlist(x)), as.numeric(unlist(y)), c(x_min, x_max), c(y_min, y_max)) # try for x and y ranges c(0,1000)
+  
+  test_env <- envelope(biased, fun=Lest, correction="best", nsim = 100) #try 1000 bootstrap simulations
+  
+  df <- data.frame("radius"=test_env$r, "obs"=test_env$obs, "hi"=test_env$hi, "low" =test_env$lo, "theo"=test_env$theo, "diff"=(test_env$obs-test_env$hi))
+
+  index <-  match(max(df$diff),df$diff)[1] # gives the first index with the max departure from CSR in case of duplicity
+
+  opt_cell <- df$radius[index] # find optimal cell size
+
+  cellsize <- append(cellsize, opt_cell) # append optimal cell size to list
+  
+  cuttoff.point <- findCutoff(df$radius, df$obs, method="curvature") # find maximum curvature 
+
+  curv <- cuttoff.point[1] #pick radius at max. curvature
+
+  opt_curv <- c(opt_curv,curv) # append r_curv to list
+  
+   
+}
+```
+
+#Let's manipulate the cell size inputs obtained into a dataframe and save to a csv file that can be exported into the jupyter notebook
+
+```{r}
+test <-  do.call(rbind,list(cellsize))
+test <- t(test)
+test2 <- do.call(rbind,opt_curv)
+df_k <-  data.frame(test,test2) # create dataframe
+colnames(df_k)<- c("max_dep","max_curv")
+rownames(df_k)=NULL #reset row indexes
+write.csv(df_k,'cellsizes_Ripley_Example.csv')
+
+```
+

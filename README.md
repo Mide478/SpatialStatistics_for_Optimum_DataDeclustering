@@ -1,4 +1,4 @@
-# LowerDimensionalSpace-Stabilization-RT-UQI
+# SpatialStatistics_for_Optimum_DataDeclustering
 
 
 <!-- TABLE OF CONTENTS -->
@@ -40,6 +40,7 @@
 <h2 id="prerequisites"> :fork_and_knife: Prerequisites</h2>
 
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/) <br>
+[![made-with-R](https://img.shields.io/badge/Made%20with-R-blue.svg)](https://www.r-project.org/) <br>
 [![Made withJupyter](https://img.shields.io/badge/Made%20with-Jupyter-orange?style=for-the-badge&logo=Jupyter)](https://jupyter.org/try) <br>
 
 <!--This project is written in Python programming language. <br>-->
@@ -47,9 +48,9 @@ The following open-source packages are mainly used in this project:
 * Numpy
 * Pandas
 * Matplotlib
-* Scikit-Learn
+* Scipy
 
-Please install other required packages detailed in the `requirements.txt` file and include custom-made `RigidTransformation_UQI_OOSP.py` containing functions in active working directory
+Please install other required packages detailed in the `requirements.txt` file and include custom-made `Functions.py` containing functions in active working directory
 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
@@ -59,8 +60,7 @@ Please install other required packages detailed in the `requirements.txt` file a
 
     Scripts
     .
-    ├── RigidTransformation_UQI_OOSP.py
-    ├── main.py
+    ├── Functions.py
 
     Workflows
     .

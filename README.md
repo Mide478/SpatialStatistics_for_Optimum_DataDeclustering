@@ -23,13 +23,13 @@
 
 <p align="justify"> 
  
-* Current nonlinear manifold dimensionality reduction (NDR) methods have various assumptions about the data, model, subsurface, geological, and engineering settings yielding non-unique solutions and tentatively increased uncertainty.
+* Subsurface resource sampling is not designed for representativity, yielding biased spatial datasets.
 
-* We propose an innovative method that stabilizes data representations in lower-dimensional space (LDS) applicable to any manifold dimensionality method using rigid transformations. This aims to create a single unique solution for LDS regardless of data perturbations, starting seed iteration, susceptibility to Euclidean transformations, and tendency of NDR’s to yield non-unique solutions.
+* Cell-based declustering (CBD) is used for debiasing datasets with sampling bias. However, the cell size selection in CBD is irrational and subjective.
 
-* Our method visualizes the uncertainty space for samples in subsurface datasets, which is helpful for model updating and inferential analysis for the inclusion of out-of-sample-points (OOSP) without model recalculation.
+* We propose a novel workflow, Spatial Statistics-based Assignment of Declustering Cell Size (SSADC) to objectively determine the optimal cell size during CBD via spatial point statistics.
 
-* Workflow demonstration on 3 experimental setups via MDS on synthetic and real subsurface datasets using the Euclidean and Manhattan distance metrics over for a large number of model and sample realizations.
+* SSADC consistently yields more accurate estimates of the true population across various degrees of sampling bias, demonstrating its effectiveness in spatial debiasing. 
 
 </p>
 
@@ -64,15 +64,14 @@ Please install other required packages detailed in the `requirements.txt` file a
 
     Workflows
     .
-    ├── Notebook 1: OOSP with Synthetic Data.ipynb
-    ├── Notebook 2: OOSP with Real Data.ipynb
-    ├── Notebook 3: Result Analysis.ipynb
+    ├── R Notebook: Cellsized_RipleyK_Example.Rmd
+    ├── SSADC Example.ipynb
 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 <!-- DATASET -->
 <h2 id="dataset"> :floppy_disk: Dataset</h2>
 <p> 
-  The dataset used for this demonstration is publicly available in <a href="[https://github.com/GeostatsGuy](https://github.com/GeostatsGuy/GeoDataSets/blob/master/unconv_MV_v4.csv)"> GeoDataSets: Synthetic Subsurface Data Repository as `unconv_MV_v4.csv` </a> 
+  The dataset used for example demonstration in SSADC Example Case folder is publicly available in <a href="[https://github.com/GeostatsGuy](https://github.com/GeostatsGuy/GeoDataSets/blob/master/sample_data_biased.csv)"> GeoDataSets: Synthetic Subsurface Data Repository as `sample_data_biased.csv` </a> 
   
 </p>
 
